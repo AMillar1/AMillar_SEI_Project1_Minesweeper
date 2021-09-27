@@ -44,24 +44,15 @@ function init() {
               board[row].push(newCell);
          }  
       }
+}
 // now to randomly mine some cells. 
-    let numMines = 1;
+    let numMines = 7;
     while (numMines > 0) {
-        let randCol = Math.floor(Math.random()) * 4;
-        let randRow = Math.floor(Math.random()) * 4;
+        let randCol = Math.floor(Math.random() * 4);
+        let randRow = Math.floor(Math.random() * 4);
         if (board[randRow][randCol].isMined === false) {
             board[randRow][randCol].isMined = true;
             numMines--;
-        }
      }
   }  // note there's no semicolon at end of fn declarations
   console.log(board);
-
-  new Cell(1,2);
-  console.log()
-
-
-
-
-
-

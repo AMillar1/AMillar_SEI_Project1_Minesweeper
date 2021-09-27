@@ -1,6 +1,7 @@
 /*----- constants -----*/
 let boardWidth = 4;
 let boardHeight = 4;
+let board;
 
 
 
@@ -26,24 +27,35 @@ class Cell{
  }
 
 /*----- cached element references -----*/
-let board = [];
+const boardEl = document.getElementById('board');
 
 /*----- event listeners -----*/
 //click on cell and ctrl-click on cell
 
 /*----- functions -----*/
 init() ;
-
 function init() {
     board = [];
-  for (let i = 0; i < boardWidth; i++) {
-      for (let j = 0; j < boardHeight; j++) {
-            let newCell = new Cell(i, j)
-            board.push[newCell];
-        };
-    };     
-};
+    for (let row = 0; row < boardWidth; row++) {
+        board.push([]);  // add row array
+        for (let col = 0; col < boardHeight; col++) {
+              let newCell = new Cell(row, col)
+              board[row].push[newCell];
+         }  // no semicolon at end of code blocks
+      }
+  }  // note there's no semicolon at end of fn declarations
+  console.log(board);
+
+// function init() {
+//     board = [];
+//   for (let i = 0; i < boardWidth; i++) {
+//       for (let j = 0; j < boardHeight; j++) {
+//             let newCell = new Cell(i, j)
+//             board.push[newCell];
+//         };
+//     };     
+// };
 //render() ;
 
-console.log(board);
+
 

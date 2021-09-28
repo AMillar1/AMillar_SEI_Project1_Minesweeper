@@ -58,10 +58,12 @@ function init() {
   console.log(board);
   console.log('test');
 
-// function renderBoard() {
-//     board.forEach(function(colArr, row){
-//         colArr.forEach(cell, col) {
-//             const cellDiv = foo;
-//         }
-//     });
-// }
+
+
+function renderBoard() {
+    board.forEach(function(rowArr, col) {
+        rowArr.forEach(function(cell, row) {
+            const cellDiv = document.createElement(`c${row}r${col}`);
+        });
+    });
+}

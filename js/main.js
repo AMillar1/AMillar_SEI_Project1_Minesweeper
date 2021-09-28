@@ -56,6 +56,7 @@ function init() {
      }
   }  // note there's no semicolon at end of fn declarations
   console.log(board);
+  console.log('test');
 
 // function renderBoard() {
 //     board.forEach(function(colArr, row){

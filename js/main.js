@@ -1,6 +1,6 @@
 /*----- constants -----*/
-let boardWidth = 4;
-let boardHeight = 4;
+let boardWidth = 8;
+let boardHeight = 8;
 let board;
 
 
@@ -16,6 +16,7 @@ class Cell{
         //this.adjSum = foo; //This one will be quite a bit of code
         this.row = row;
         this.col = col;
+        this.adjSum = 0;
     } 
     show() {
         this.isShown = true;
@@ -34,6 +35,19 @@ const boardEl = document.getElementById('board');
 //click on cell and ctrl-click on cell
 
 /*----- functions -----*/
+function addMines(){
+    let numMines = 30;
+        while (numMines > 0) {
+            let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
+            let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
+            if (board[randRow][randCol].isMined === false) {//check if the index is mined or not
+            board[randRow][randCol].isMined = true; numMines--; //if it isnt mined, mine it and then decriment numMines
+     }
+    }  
+    console.log(board);
+    }
+
+
 init() ;
 function init() {
     board = [];
@@ -55,26 +69,39 @@ function init() {
             }
         }
       }
-// now to randomly mine some cells. 
-function addMines(){
-let numMines = 7;
-    while (numMines > 0) {
-        let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
-        let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
-        if (board[randRow][randCol].isMined === false) {//check if the index is mined or not
-        board[randRow][randCol].isMined = true; numMines--; //if it isnt mined, mine it and then decriment numMines
- }
-}  
-console.log(board);
-}
+    calcAdj();
 }
 
-// function renderBoard() {
-//     board.forEach(function(rowArr, col) {
-//         rowArr.forEach(function(cell, row) {
-//             const cellDiv = document.createElement('div');
-//             cellDiv.id = `r${row}c${col}`;
-//             boardEl.appendChild(cellDiv);
-//         });
-//     });
-// }
+function calcAdj() {
+    for (let row = 0; row < boardWidth; row++) {
+        for (let col = 0; col < boardHeight; col++) {
+            let counter = 0;
+            if (board[row + 1][col + 1].isMined === true) {//check diagonally down
+                counter++;//increase the counter
+            }
+            if (col > 0 && board[row + 1][col - 1].isMined === true) {
+                counter++;
+            }
+            if (row > 0 && board[row - 1][col + 1].isMined === true) {
+                counter++;
+            }
+            if (col > 0 && row > 0 && board[row - 1][col - 1].isMined === true) {
+                counter++;
+            }
+            if (board[row][col + 1].isMined === true) {
+                counter++;
+            }
+            if (col > 0 && board[row][col - 1].isMined === true) {
+                counter++;
+            }
+            if (row > 0 && board[row - 1][col].isMined === true) {
+                counter++;
+            }
+            if (board[row + 1][col].isMined === true) {
+                counter++;
+            } 
+        }   
+        console.log(counter);
+    }
+}
+//(board[row][col])

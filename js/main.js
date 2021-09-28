@@ -42,12 +42,21 @@ function init() {
         for (let col = 0; col < boardHeight; col++) {
               let newCell = new Cell(row, col);
               board[row].push(newCell); //this creates the disired JS object 'board,' a 2D array with cell objects as base elements. 
+        }
+      }
+    addMines();
+      for (let row = 0; row < boardWidth; row++) {
+        for (let col = 0; col < boardHeight; col++) {
               const cellDiv = document.createElement('div');
-              cellDiv.id = `c${row}r${col}`;  
-              boardEl.appendChild(cellDiv);//now we want to ALSO create a div corresponding that that cell. 
-            }  
+              cellDiv.id = `c${col}r${row}`;  
+              boardEl.appendChild(cellDiv);
+              if (board[row][col].isMined === true) {
+                cellDiv.classList.add('mine')  //now we want to ALSO create a div corresponding that that cell. 
+            }
+        }
       }
 // now to randomly mine some cells. 
+function addMines(){
 let numMines = 7;
     while (numMines > 0) {
         let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
@@ -57,6 +66,7 @@ let numMines = 7;
  }
 }  
 console.log(board);
+}
 }
 
 // function renderBoard() {

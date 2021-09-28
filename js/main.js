@@ -44,26 +44,29 @@ function init() {
               board[row].push(newCell);
          }  
       }
-}
 // now to randomly mine some cells. 
-    let numMines = 7;
-    while (numMines > 0) {
-        let randCol = Math.floor(Math.random() * boardHeight);
-        let randRow = Math.floor(Math.random() * boardWidth);
-        if (board[randRow][randCol].isMined === false) {
-            board[randRow][randCol].isMined = true;
-            numMines--;
-     }
-  }  // note there's no semicolon at end of fn declarations
-  console.log(board);
-  console.log('test');
+let numMines = 7;
+while (numMines > 0) {
+    let randCol = Math.floor(Math.random() * boardHeight);
+    let randRow = Math.floor(Math.random() * boardWidth);
+    if (board[randRow][randCol].isMined === false) {
+        board[randRow][randCol].isMined = true;
+        numMines--;
+ }
+}  
+console.log(board);
+    }
+
+  
 
 
 
 function renderBoard() {
     board.forEach(function(rowArr, col) {
         rowArr.forEach(function(cell, row) {
-            const cellDiv = document.createElement(`c${row}r${col}`);
+            const cellDiv = document.createElement('div');
+            cellDiv.id = `r${row}c${col}`;
+            boardEl.appendChild(cellDiv);
         });
     });
 }

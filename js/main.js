@@ -77,19 +77,19 @@ function calcAdj() {
         for (let col = 0; col < boardHeight; col++) {//for every cell in the board array
             let counter = 0;
             // if (!board[row + 1] || !board[row + 1][col + 1] || !board[row - 1]) break;
-            if (row < boardWidth && col < boardHeight && board[row + 1][col + 1].isMined === true) {//check SE extra conditions are for edge cells. 
+            if (row < boardHeight - 1 && col < boardWidth - 1 && board[row + 1][col + 1].isMined === true) {//check SE extra conditions are for edge cells. All cells of the form 
                 counter++;//increase the counter
-            }
-            if (col > 0 && row < boardWidth && board[row + 1][col - 1].isMined === true) {// check SW 
+            } 
+            if (row < boardHeight - 1 && col > 0 && board[row + 1][col - 1].isMined === true) {// check SW 
                 counter++;
             }
-            if (row > 0 && board[row - 1][col + 1].isMined === true) {//  check NE
+            if (row > 0 && col < boardWidth - 1 && board[row - 1][col + 1].isMined === true) {//  check NE
                 counter++;
             }
             if (col > 0 && row > 0 && board[row - 1][col - 1].isMined === true) {// check NW
                 counter++;
             }
-            if (board[row][col + 1].isMined === true) {// check E
+            if (col < boardWidth - 1 && board[row][col + 1].isMined === true) {// check E
                 counter++;
             }
             if (col > 0 && board[row][col - 1].isMined === true) {//check W
@@ -98,12 +98,17 @@ function calcAdj() {
             if (row > 0 && board[row - 1][col].isMined === true) {//check N
                 counter++;
             }
-            if (board[row + 1][col].isMined === true) {// check S
+            if (row < boardHeight - 1 && board[row + 1][col].isMined === true) {// check S
                 counter++;
             } 
-            // console.log(counter);
+            console.log(counter);
         document.getElementById(`c${col}r${row}`).innerText = counter;
         }    
     }
 }
 //(board[row][col])
+
+// if col > 0 // dont look W
+// if row > 0 // dont look N
+// if col < boardWidth - 1 // dont look E 
+// if row < boardHeight - 1 // dont look S 

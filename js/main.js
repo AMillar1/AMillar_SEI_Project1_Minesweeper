@@ -1,6 +1,6 @@
 /*----- constants -----*/
-let boardWidth = 4;
-let boardHeight = 4;
+let boardWidth = 8;
+let boardHeight = 8;
 let board;
 
 
@@ -105,14 +105,17 @@ function calcAdj() {
     }
 }
 function handleLeftClick(evt) {
-    let colIdx = cellEls.indexOf(evt.target) % boardWidth;
-    let rowIdx = Math.floor(cellEls.indexOf(evt.target) / boardHeight);
-    console.log(colIdx, rowIdx);
+        const index = cellEls.indexOf(evt.target);
+        let colIdx = index % boardWidth;
+        let rowIdx = Math.floor(index / boardHeight);
+        console.log(colIdx, rowIdx);
+    
     if (board[colIdx][rowIdx].isShown === false) {
         board[colIdx][rowIdx].isShown = true; 
-    }
+        }
     console.log(board);
 }
+
 
 //(board[row][col])
 

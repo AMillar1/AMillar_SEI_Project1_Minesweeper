@@ -13,7 +13,6 @@ class Cell{
         this.isMined = false; //should be a bool
         this.isShown = false; //also a bool
         this.isFlagged = false; //yet another bool
-        //this.adjSum = foo; //This one will be quite a bit of code
         this.row = row;
         this.col = col;
         this.adjSum = 0;
@@ -103,11 +102,10 @@ function calcAdj() {
     }
 }
 function handleLeftClick(evt) {
-    let clickedCell = evt.target;
-    if (evt.target.isShown = false) {
+    if (evt.target.isShown === false) {
         evt.target.isShown = true;
     }
-    console.log(clickedCell);
+    console.log(evt.target);
     console.log(board);
     // if (board[rowOfClicked].isShown === false) {
     //     isShown = true;

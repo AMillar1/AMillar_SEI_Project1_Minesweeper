@@ -24,7 +24,8 @@ class Cell{
 
 /*----- cached element references -----*/
 const boardEl = document.getElementById('board');
-const cellEls = [...document.querySelectorAll('#board > div')];
+// const cellEls = [...document.querySelectorAll('#board > div')];
+
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleLeftClick);
@@ -66,6 +67,8 @@ function init() {
       }
     calcAdj();
 }
+const cellEls = [...document.querySelectorAll('#board > div')];
+console.log(cellEls);
 
 function calcAdj() {
     for (let row = 0; row < boardWidth; row++) {
@@ -102,15 +105,13 @@ function calcAdj() {
     }
 }
 function handleLeftClick(evt) {
-    if (evt.target.isShown === false) {
-        evt.target.isShown = true;
+    let colIdx = cellEls.indexOf(evt.target) % boardWidth;
+    let rowIdx = Math.floor(cellEls.indexOf(evt.target) / boardHeight);
+    console.log(colIdx, rowIdx);
+    if (board[colIdx][rowIdx].isShown === false) {
+        board[colIdx][rowIdx].isShown = true; 
     }
-    console.log(evt.target);
     console.log(board);
-    // if (board[rowOfClicked].isShown === false) {
-    //     isShown = true;
-    // }
-    // console.log(board);
 }
 
 //(board[row][col])

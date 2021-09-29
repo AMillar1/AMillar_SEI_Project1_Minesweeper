@@ -1,6 +1,6 @@
 /*----- constants -----*/
-let boardWidth = 8;
-let boardHeight = 8;
+let boardWidth = 4;
+let boardHeight = 4;
 let board;
 
 
@@ -9,9 +9,9 @@ let board;
 //for each cell, tracking whether it is mined, 
 // Board object and each of the cells. 
 class Cell{
-    constructor(row, col){
+    constructor(row, col)  {
         this.isMined = false; //should be a bool
-        this.isShown = true; //also a bool
+        this.isShown = false; //also a bool
         this.isFlagged = false; //yet another bool
         //this.adjSum = foo; //This one will be quite a bit of code
         this.row = row;
@@ -21,22 +21,20 @@ class Cell{
     show() {
         this.isShown = true;
     }
-    calcAdj() {    
-    }
-    placeMine(){
-        this.isMined = true;
-    }
  }
 
 /*----- cached element references -----*/
 const boardEl = document.getElementById('board');
+const cellEls = [...document.querySelectorAll('#board > div')];
 
 /*----- event listeners -----*/
+document.getElementById('board').addEventListener('click', handleLeftClick);
 //click on cell and ctrl-click on cell
 
+init();
 /*----- functions -----*/
 function addMines(){
-    let numMines = 30;
+    let numMines = 8;
         while (numMines > 0) {
             let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
             let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
@@ -47,8 +45,6 @@ function addMines(){
     console.log(board);
     }
 
-
-init() ;
 function init() {
     board = [];
     for (let row = 0; row < boardWidth; row++) {
@@ -106,6 +102,19 @@ function calcAdj() {
         }    
     }
 }
+function handleLeftClick(evt) {
+    let clickedCell = evt.target;
+    if (evt.target.isShown = false) {
+        evt.target.isShown = true;
+    }
+    console.log(clickedCell);
+    console.log(board);
+    // if (board[rowOfClicked].isShown === false) {
+    //     isShown = true;
+    // }
+    // console.log(board);
+}
+
 //(board[row][col])
 
 // if col > 0 // dont look W

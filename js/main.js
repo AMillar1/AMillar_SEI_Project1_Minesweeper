@@ -8,19 +8,19 @@ let board;
 /*----- app's state (variables) -----*/
 //for each cell, tracking whether it is mined, 
 // Board object and each of the cells. 
-class Cell{
-    constructor(row, col)  {
-        this.isMined = false; //should be a bool
-        this.isShown = false; //also a bool
-        this.isFlagged = false; //yet another bool
+class Cell {
+    constructor(row, col) {
+        this.isMined = false;
+        this.isShown = false;
+        this.isFlagged = false;
         this.row = row;
         this.col = col;
         this.adjSum = 0;
-    } 
+    }
     show() {
         this.isShown = true;
     }
- }
+}
 
 /*----- cached element references -----*/
 const boardEl = document.getElementById('board');
@@ -29,46 +29,46 @@ const boardEl = document.getElementById('board');
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleLeftClick);
+document.getElementById('board').addEventListener('contextmenu', handleRightClick);
 //click on cell and ctrl-click on cell
 
 init();
 /*----- functions -----*/
-function addMines(){
-    let numMines = 8;
-        while (numMines > 0) {
-            let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
-            let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
-            if (board[randRow][randCol].isMined === false) {//check if the index is mined or not
+function addMines() {
+    let numMines = 32;
+    while (numMines > 0) {
+        let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
+        let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
+        if (board[randRow][randCol].isMined === false) {//check if the index is mined or not
             board[randRow][randCol].isMined = true; numMines--; //if it isnt mined, mine it and then decriment numMines
-     }
-    }  
-    console.log(board);
+        }
     }
+}
 
 function init() {
     board = [];
     for (let row = 0; row < boardWidth; row++) {
         board.push([]);  // add row array
         for (let col = 0; col < boardHeight; col++) {
-              let newCell = new Cell(row, col);
-              board[row].push(newCell); //this creates the disired JS object 'board,' a 2D array with cell objects as base elements. 
+            let newCell = new Cell(row, col);
+            board[row].push(newCell); //this creates the disired JS object 'board,' a 2D array with cell objects as base elements. 
         }
-      }
+    }
     addMines();
-      for (let row = 0; row < boardWidth; row++) {
+    for (let row = 0; row < boardWidth; row++) {
         for (let col = 0; col < boardHeight; col++) {
-              const cellDiv = document.createElement('div');
-              cellDiv.id = `c${col}r${row}`;  
-              boardEl.appendChild(cellDiv);
-              if (board[row][col].isMined === true) {
-                cellDiv.classList.add('mine')  //now we want to ALSO create a div corresponding that that cell. 
+            const cellDiv = document.createElement('div');
+            cellDiv.id = `c${col}r${row}`;
+            boardEl.appendChild(cellDiv);
+            if (board[row][col].isMined === true) {
+                cellDiv.classList.add('mine')
             }
         }
-      }
+    }
     calcAdj();
 }
 const cellEls = [...document.querySelectorAll('#board > div')];
-console.log(cellEls);
+
 
 function calcAdj() {
     for (let row = 0; row < boardWidth; row++) {
@@ -77,7 +77,7 @@ function calcAdj() {
             // if (!board[row + 1] || !board[row + 1][col + 1] || !board[row - 1]) break;
             if (row < boardHeight - 1 && col < boardWidth - 1 && board[row + 1][col + 1].isMined === true) {//check SE extra conditions are for edge cells. All cells of the form 
                 counter++;//increase the counter
-            } 
+            }
             if (row < boardHeight - 1 && col > 0 && board[row + 1][col - 1].isMined === true) {// check SW 
                 counter++;
             }
@@ -98,28 +98,41 @@ function calcAdj() {
             }
             if (row < boardHeight - 1 && board[row + 1][col].isMined === true) {// check S
                 counter++;
-            } 
-            console.log(counter);
-        document.getElementById(`c${col}r${row}`).innerText = counter;
-        }    
+            }
+            document.getElementById(`c${col}r${row}`).innerText = counter; //put in innerHTML and toggle only that <h1>
+        }
     }
 }
 function handleLeftClick(evt) {
-        const index = cellEls.indexOf(evt.target);
-        let colIdx = index % boardWidth;
-        let rowIdx = Math.floor(index / boardHeight);
-        console.log(colIdx, rowIdx);
-    
+    const index = cellEls.indexOf(evt.target);
+    let colIdx = index % boardWidth;
+    let rowIdx = Math.floor(index / boardHeight);
+    console.log(colIdx, rowIdx);
+    if (index === -1) return;
     if (board[colIdx][rowIdx].isShown === false) {
-        board[colIdx][rowIdx].isShown = true; 
-        }
+        board[colIdx][rowIdx].isShown = true;
+    }
+    console.log(board);
+}
+function handleRightClick(evt) {
+    const index = cellEls.indexOf(evt.target);
+    let colIdx = index % boardWidth;
+    let rowIdx = Math.floor(index / boardHeight);
+    console.log(colIdx, rowIdx);
+    if (index === -1) return;
+    if (board[colIdx][rowIdx].isFlagged === false) {
+        board[colIdx][rowIdx].isFlagged = true;
+    }
     console.log(board);
 }
 
+function render() {
+    renderBoard();
+    renderMessaging();
+}
 
-//(board[row][col])
-
-// if col > 0 // dont look W
-// if row > 0 // dont look N
-// if col < boardWidth - 1 // dont look E 
-// if row < boardHeight - 1 // dont look S 
+function renderBoard() {
+    for (let row = 0; row < boardWidth; row++) {
+        for (let col = 0; col < boardHeight; col++)
+        let 
+}

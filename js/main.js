@@ -99,7 +99,8 @@ function calcAdj() {
             if (row < boardHeight - 1 && board[row + 1][col].isMined === true) {// check S
                 counter++;
             }
-            document.getElementById(`c${col}r${row}`).innerText = counter; //put in innerHTML and toggle only that <h1>
+            // document.getElementById(`c${col}r${row}`).innerText = counter; //put in innerHTML and toggle only that <h1>
+            board[col][row].adjSum = counter; 
         }
     }
 }
@@ -113,6 +114,7 @@ function handleLeftClick(evt) {
         board[colIdx][rowIdx].isShown = true;
     }
     console.log(board);
+    render();
 }
 function handleRightClick(evt) {
     const index = cellEls.indexOf(evt.target);
@@ -124,15 +126,24 @@ function handleRightClick(evt) {
         board[colIdx][rowIdx].isFlagged = true;
     }
     console.log(board);
+    render();
 }
+
 
 function render() {
     renderBoard();
-    renderMessaging();
+    // renderMessaging();
 }
 
 function renderBoard() {
-    for (let row = 0; row < boardWidth; row++) {
-        for (let col = 0; col < boardHeight; col++)
-        let 
+    cellEls.forEach(function(cell) {
+        let index = cellEls.indexOf(cell);
+        let domCell = board[index % boardWidth][Math.floor(index / boardHeight)];
+        if (domCell.isFlagged === true) {
+            cell.classList.add('flag');
+        } else if (domCell.isShown && !domCell.isMined) {
+            cell.innertext = domCell.adjSum;
+            console.log(cell);
+        }
+    })
 }

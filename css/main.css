@@ -20,3 +20,7 @@ body {
 .mine {
  background-color: red;
 }
+
+.flag {
+  background-color: green;
+}

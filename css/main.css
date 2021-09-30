@@ -13,7 +13,9 @@ body {
     gap: 1vmin;
   }
 #board > div {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 0.1vmin solid grey;
   }
 
@@ -23,4 +25,12 @@ body {
 
 .flag {
   background-color: green;
+}
+
+.covered {
+  background-color: gray;
+}
+
+.shown {
+  background-color: whitesmoke;
 }

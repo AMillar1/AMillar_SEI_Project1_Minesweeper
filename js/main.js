@@ -2,6 +2,7 @@
 let boardWidth = 8;
 let boardHeight = 8;
 let board;
+const winPlayer = new Audio('https://audio-previews.elements.envatousercontent.com/files/111184960/preview.mp3?response-content-disposition=attachment%3B+filename%3D%22K3RTHA7-game-win-horns.mp3%22');
 
 
 
@@ -30,17 +31,23 @@ class Cell {
                     board[row][col].isFlagged = false;
                 }
             }
+        } else {
+            let winner = true;
+            for (let row = 0; row < boardHeight; row++) {
+                for (let col = 0; col < boardWidth; col++) {
+                    if (!((board[row][col].isFlagged && board[row][col].isMined) || board[row][col].isShown)) {
+                        winner = false;
+                        break;
+                    }
+                }   
+                if (!winner) break;
+            }
+            if (winner) winnerOrLose = 'W';
         }
         if (this.adjSum === 0) {
             this.neighbors.forEach(function(neighbor) {
                 if (!neighbor.isShown && !neighbor.isMined) neighbor.show();
             })
-        }
-        for (let row = 0; row < boardHeight; row++) {
-            for (let col = 0; col < boardWidth; col++) {
-                if ((board[row][col].isFlagged && board[row][col].isMined) || board[row][col].isShown) {                    
-                }
-            }   
         }
     }
 }
@@ -59,7 +66,7 @@ document.getElementById('board').addEventListener('contextmenu', handleRightClic
 init();
 /*----- functions -----*/
 function addMines() {
-    let numMines = 12;
+    let numMines = 2;
     while (numMines > 0) {
         let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
         let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
@@ -147,6 +154,7 @@ function handleRightClick(evt) {
     let rowIdx = parseInt(id[3]);
     if (id === 'board') return;
     board[rowIdx][colIdx].isFlagged = !board[rowIdx][colIdx].isFlagged;
+    //audioFX
     render();
 }
 function render() {
@@ -176,6 +184,7 @@ function renderMessaging() {
         messageEl.innerText = 'Kaboom!';
     } else if (winnerOrLose === 'W') {
         messageEl.innerText = 'Victory!';
+        winPlayer.play();
     } else {
         messageEl.innerText = 'Be Careful!';
     }

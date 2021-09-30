@@ -66,7 +66,7 @@ document.getElementById('board').addEventListener('contextmenu', handleRightClic
 init();
 /*----- functions -----*/
 function addMines() {
-    let numMines = 2;
+    let numMines = 8;
     while (numMines > 0) {
         let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
         let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index

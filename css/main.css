@@ -8,8 +8,8 @@ body {
 }
 #board {
     display: grid;
-    grid-template-columns: repeat(8, 10vmin); 
-    grid-template-rows: repeat(8, 10vmin);
+    grid-template-columns: repeat(10, 10vmin); 
+    grid-template-rows: repeat(10, 10vmin);
     gap: 1vmin;
   }
 #board > div {

@@ -35,7 +35,7 @@ document.getElementById('board').addEventListener('contextmenu', handleRightClic
 init();
 /*----- functions -----*/
 function addMines() {
-    let numMines = 32;
+    let numMines = 8;
     while (numMines > 0) {
         let randCol = Math.floor(Math.random() * boardHeight); //generate a random col index
         let randRow = Math.floor(Math.random() * boardWidth); //generate a random row index
@@ -141,9 +141,12 @@ function renderBoard() {
         let domCell = board[index % boardWidth][Math.floor(index / boardHeight)];
         if (domCell.isFlagged === true) {
             cell.classList.add('flag');
-        } else if (domCell.isShown && !domCell.isMined) {
-            cell.innertext = domCell.adjSum;
+        }    
+        if (domCell.isShown && !domCell.isMined) {
+            cell.innerText = domCell.adjSum === 0 ? '' : domCell.adjSum;
             console.log(cell);
+            console.log(domCell.adjSum);
         }
     })
 }
+console.log(cellEls);

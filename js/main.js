@@ -36,6 +36,12 @@ class Cell {
                 if (!neighbor.isShown && !neighbor.isMined) neighbor.show();
             })
         }
+        for (let row = 0; row < boardHeight; row++) {
+            for (let col = 0; col < boardWidth; col++) {
+                if ((board[row][col].isFlagged && board[row][col].isMined) || board[row][col].isShown) {                    
+                }
+            }   
+        }
     }
 }
 let cellEls;
@@ -43,14 +49,12 @@ let winnerOrLose;
 
 /*----- cached element references -----*/
 const boardEl = document.getElementById('board');
-// const cellEls = [...document.querySelectorAll('#board > div')];
+const messageEl = document.querySelector('h1');
 
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleLeftClick);
 document.getElementById('board').addEventListener('contextmenu', handleRightClick);
-
-//click on cell and ctrl-click on cell
 
 init();
 /*----- functions -----*/
@@ -64,7 +68,6 @@ function addMines() {
         }
     }
 }
-
 function init() {
     winnerOrLose = null;
     board = [];
@@ -87,9 +90,6 @@ function init() {
     cellEls = [...document.querySelectorAll('#board > div')];
     render();
 }
-
-
-
 function calcAdj() {
     for (let row = 0; row < boardHeight; row++) {
         for (let col = 0; col < boardWidth; col++) {//for every cell in the board array
@@ -149,25 +149,10 @@ function handleRightClick(evt) {
     board[rowIdx][colIdx].isFlagged = !board[rowIdx][colIdx].isFlagged;
     render();
 }
-
-// function handleRightClick(evt) {
-//     const index = cellEls.indexOf(evt.target);
-//     let colIdx = index % boardWidth;
-//     let rowIdx = Math.floor(index / boardHeight);
-//     console.log(colIdx, rowIdx);
-//     if (index === -1) return;
-//     if (board[colIdx][rowIdx].isFlagged === false) {
-//         board[colIdx][rowIdx].isFlagged = true;
-//     }
-//     render();
-// }
-
-
 function render() {
     renderBoard();
-    // renderMessaging();
+    renderMessaging();
 }
-
 function renderBoard() {
     cellEls.forEach(function (cellEl) {
         let id = cellEl.id;
@@ -185,4 +170,13 @@ function renderBoard() {
             cellEl.className = 'covered';
         }
     });
+}
+function renderMessaging() {
+    if (winnerOrLose === 'L') {
+        messageEl.innerText = 'Kaboom!';
+    } else if (winnerOrLose === 'W') {
+        messageEl.innerText = 'Victory!';
+    } else {
+        messageEl.innerText = 'Be Careful!';
+    }
 }

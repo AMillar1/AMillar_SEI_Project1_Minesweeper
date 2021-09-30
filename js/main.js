@@ -17,22 +17,29 @@ class Cell {
         this.row = row;
         this.col = col;
         this.adjSum = 0;
+        this.neighbors = [];
     }
     show() {
         this.isShown = true;
+        this.isFlagged = false;
         if (this.isMined) {
             winnerOrLose = 'L';
             for (let row = 0; row < boardHeight; row++) {
                 for (let col = 0; col < boardWidth; col++) {
                     board[row][col].isShown = true;
+                    board[row][col].isFlagged = false;
                 }
             }
-        } 
-    
+        }
+        if (this.adjSum === 0) {
+            this.neighbors.forEach(function(neighbor) {
+                if (!neighbor.isShown && !neighbor.isMined) neighbor.show();
+            })
+        }
     }
 }
 let cellEls;
-let winnerOrLose; 
+let winnerOrLose;
 
 /*----- cached element references -----*/
 const boardEl = document.getElementById('board');
@@ -59,7 +66,7 @@ function addMines() {
 }
 
 function init() {
-    winnerOrLose = null; 
+    winnerOrLose = null;
     board = [];
     for (let row = 0; row < boardHeight; row++) {
         board.push([]);  // add row array
@@ -87,32 +94,38 @@ function calcAdj() {
     for (let row = 0; row < boardHeight; row++) {
         for (let col = 0; col < boardWidth; col++) {//for every cell in the board array
             let counter = 0;
-            // if (!board[row + 1] || !board[row + 1][col + 1] || !board[row - 1]) break;
-            if (row < boardHeight - 1 && col < boardWidth - 1 && board[row + 1][col + 1].isMined) {//check SE extra conditions are for edge cells. All cells of the form 
-                counter++;//increase the counter
+            if (row < boardHeight - 1 && col < boardWidth - 1) {
+                board[row][col].neighbors.push(board[row + 1][col + 1]);//checK SE
+                if (board[row + 1][col + 1].isMined) counter++;
             }
-            if (row < boardHeight - 1 && col > 0 && board[row + 1][col - 1].isMined) {// check SW 
-                counter++;
+            if (row < boardHeight - 1 && col > 0) {
+                board[row][col].neighbors.push(board[row + 1][col - 1]);// check SW 
+                if (board[row + 1][col - 1].isMined) counter++;   
             }
-            if (row > 0 && col < boardWidth - 1 && board[row - 1][col + 1].isMined) {//  check NE
-                counter++;
+            if (row > 0 && col < boardWidth - 1) {//  check NE
+                board[row][col].neighbors.push(board[row - 1][col + 1]);
+                if (board[row - 1][col + 1].isMined) counter++;
             }
-            if (col > 0 && row > 0 && board[row - 1][col - 1].isMined) {// check NW
-                counter++;
+            if (col > 0 && row > 0) {// check NW
+                board[row][col].neighbors.push(board[row - 1][col - 1]);
+                if (board[row - 1][col - 1].isMined) counter++;
             }
-            if (col < boardWidth - 1 && board[row][col + 1].isMined) {// check E
-                counter++;
+            if (col < boardWidth - 1) {// check E
+                board[row][col].neighbors.push(board[row][col + 1]);
+                if (board[row][col + 1].isMined) counter++;
             }
-            if (col > 0 && board[row][col - 1].isMined) {//check W
-                counter++;
+            if (col > 0) {//check W
+                board[row][col].neighbors.push(board[row][col - 1]);
+                if (board[row][col - 1].isMined) counter++;
             }
-            if (row > 0 && board[row - 1][col].isMined) {//check N
-                counter++;
+            if (row > 0) {//check N
+                board[row][col].neighbors.push(board[row - 1][col]);
+                if (board[row - 1][col].isMined) counter++;
             }
-            if (row < boardHeight - 1 && board[row + 1][col].isMined) {// check S
-                counter++;
+            if (row < boardHeight - 1) {// check S
+                board[row][col].neighbors.push(board[row + 1][col]);
+                if (board[row + 1][col].isMined) counter++;
             }
-            // document.getElementById(`c${col}r${row}`).innerText = counter; //put in innerHTML and toggle only that <h1>
             board[row][col].adjSum = counter;
         }
     }
@@ -125,20 +138,29 @@ function handleLeftClick(evt) {
     if (!board[rowIdx][colIdx].isShown) {
         board[rowIdx][colIdx].show();
     }
-    console.log(colIdx, rowIdx);
     render();
 }
 function handleRightClick(evt) {
-    const index = cellEls.indexOf(evt.target);
-    let colIdx = index % boardWidth;
-    let rowIdx = Math.floor(index / boardHeight);
-    console.log(colIdx, rowIdx);
-    if (index === -1) return;
-    if (board[colIdx][rowIdx].isFlagged === false) {
-        board[colIdx][rowIdx].isFlagged = true;
-    }
+    evt.preventDefault();
+    const id = evt.target.id;
+    let colIdx = parseInt(id[1]);
+    let rowIdx = parseInt(id[3]);
+    if (id === 'board') return;
+    board[rowIdx][colIdx].isFlagged = !board[rowIdx][colIdx].isFlagged;
     render();
 }
+
+// function handleRightClick(evt) {
+//     const index = cellEls.indexOf(evt.target);
+//     let colIdx = index % boardWidth;
+//     let rowIdx = Math.floor(index / boardHeight);
+//     console.log(colIdx, rowIdx);
+//     if (index === -1) return;
+//     if (board[colIdx][rowIdx].isFlagged === false) {
+//         board[colIdx][rowIdx].isFlagged = true;
+//     }
+//     render();
+// }
 
 
 function render() {

@@ -8,8 +8,8 @@ The game is very simple. There are 8 mines lurking beneath the grid. Uncovering 
 
 **Click [here](https://amillar1.github.io/AMillar_SEI_Project1_Minesweeper/) to play!**
 
-[Screenshot1](https://i.imgur.com/M8uSFFM.png)
-[Screenshot2](https://i.imgur.com/O7uYpO4.png)
+![Alt text](https://i.imgur.com/M8uSFFM.png)
+![Alt text](https://i.imgur.com/O7uYpO4.png)
 
 ## Next Steps
 There are a number of features that could be added to improve the gameplay experience: 

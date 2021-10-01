@@ -4,7 +4,7 @@ Fun fact, basic Minesweeper is known to be NP-complete, putting in a class of ve
 
 
 ## Getting Started
-The game is very simple. There are 8 mines lurking beneath the grid. Uncovering even one of them means instant defeat. The cells give clues however; each uncovered cell displays the number of adjacent (vertically, horizontally, _and_ diagonally) cells which contain a mine. Tread carefully, and you may be able to determine the location of every mine, and ensure you avoid stepping on them in the future! 
+The game is very simple. There are 8 mines lurking beneath the grid. Uncovering even one of them means instant defeat. The cells give clues however; each uncovered cell displays the number of adjacent (vertically, horizontally, _and_ diagonally) cells which contain a mine. Tread carefully, and you may be able to determine the location of every mine, and ensure you avoid stepping on them in the future! You can right/control click on a cell to '(un)flag' it. Clear all the empty cells and flag all the mines to win! 
 
 **Click [here](https://amillar1.github.io/AMillar_SEI_Project1_Minesweeper/) to play!**
 

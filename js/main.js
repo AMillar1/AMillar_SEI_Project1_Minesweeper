@@ -3,8 +3,7 @@ let boardWidth = 8;
 let boardHeight = 8;
 let board;
 const winPlayer = new Audio('https://audio-previews.elements.envatousercontent.com/files/111184960/preview.mp3?response-content-disposition=attachment%3B+filename%3D%22K3RTHA7-game-win-horns.mp3%22');
-
-
+const losePlayer = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-pixel-chiptune-explosion-1692.json');
 
 
 /*----- app's state (variables) -----*/
@@ -39,13 +38,13 @@ class Cell {
                         winner = false;
                         break;
                     }
-                }   
+                }
                 if (!winner) break;
             }
             if (winner) winnerOrLose = 'W';
         }
         if (this.adjSum === 0) {
-            this.neighbors.forEach(function(neighbor) {
+            this.neighbors.forEach(function (neighbor) {
                 if (!neighbor.isShown && !neighbor.isMined) neighbor.show();
             })
         }
@@ -107,7 +106,7 @@ function calcAdj() {
             }
             if (row < boardHeight - 1 && col > 0) {
                 board[row][col].neighbors.push(board[row + 1][col - 1]);// check SW 
-                if (board[row + 1][col - 1].isMined) counter++;   
+                if (board[row + 1][col - 1].isMined) counter++;
             }
             if (row > 0 && col < boardWidth - 1) {//  check NE
                 board[row][col].neighbors.push(board[row - 1][col + 1]);
@@ -182,6 +181,7 @@ function renderBoard() {
 function renderMessaging() {
     if (winnerOrLose === 'L') {
         messageEl.innerText = 'Kaboom!';
+        losePlayer.play();
     } else if (winnerOrLose === 'W') {
         messageEl.innerText = 'Victory!';
         winPlayer.play();
